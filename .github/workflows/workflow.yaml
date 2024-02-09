@@ -22,10 +22,12 @@ jobs:
         run: |
           echo "Step 1 completed successfully."
           echo "The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The resuable workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
           ls
           echo "${{ github.workspace }}"
           echo "Triggered in branch ${{ github.ref_name }}"
+      - name: Custom action
+        id: Customaction
+        uses: ./.github/actions/hello
 
