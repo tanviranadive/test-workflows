@@ -1,0 +1,31 @@
+name: Reusable workflow demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      tag:
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        id: step1
+        run: echo "🐧 This job is now running on reusable workflow on ${{ runner.os }} server with {{inputs.image_name} and tag {{inputs.tag}}!"
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Step2
+        if: steps.step1.outputs.exit_code == 1
+        run: |
+          echo "Step 1 completed successfully."
+          echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The resuable workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls
+          echo "${{ github.workspace }}"
+          echo "Triggered in branch ${{ github.ref_name }}"
+
